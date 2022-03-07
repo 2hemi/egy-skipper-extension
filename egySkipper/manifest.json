@@ -3,12 +3,12 @@
     "description": "Extension to add skip and back episodes and seasons buttons on egybest website",
     "manifest_version": 2,
     "name": "EgySkipper",
-    "version": "1.0",
+    "version": "1.1",
     "homepage_url": "https://github.com/2hemi/egy-skipper-extension",
   
     "content_scripts": [
       {
-        "matches": ["*://*.egybest.bid/episode/*"],
+        "matches": ["*://*.egybest.bid/*"],
         "js": ["egySkipper.js"]
       }
     ]

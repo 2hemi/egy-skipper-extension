@@ -5,35 +5,46 @@ if (url.slice(-1) == '/'){
     url = url.slice(0,-1);
  
 }
+/*
+if (url.slice(-3) != '#ld'){
+    window.location.href = url+'#ld';
+  //  window.location.reload();
 
-window.onload = function() {
-    if(!window.location.hash) {
-        window.location = window.location + '#loaded';
-        window.location.reload();
-    }
 }
+window.onload = (event) =>{
+
+    console.log('Page Loaded');
+
+}*/
 const newDiv = document.createElement("div");
 
 const newContent = document.createTextNode("change");
  
 
-newDiv.innerHTML = '<button id = "back1" type="button" >back</button> <button id = "next1" type="button" >next</button> ';
+newDiv.innerHTML = '<button id = "back1" type="button" >previous</button> \
+                    <button id = "next1" type="button" >next</button> ';
 
 const parentDiv = document.getElementById("body");
 const childDiv = document.getElementById("main");
 const child2Div = document.getElementById("mainLoad");
 const currentDiv = document.getElementById("watch_dl");
 
-
 child2Div.insertBefore(newDiv, currentDiv);
+
+
+const ep_index = url.indexOf('ep-')+3;
+const url_post_ep_index = url.substring(ep_index);
+console.log('shit1 '+url_post_ep_index);
 
 document.getElementById("next1").onclick =  function(){
 
     url = window.location.href
     if (url.slice(-1) == '/')
         url = url.slice(0,-1);
-    const editedurl= url.slice(0,-1)+(parseInt( url.slice(-1))+1);
-    window.location.href = editedurl;
+    
+    url = url.substring(0,ep_index)+(parseInt(url_post_ep_index)+1);
+
+    window.location.href = url;
     
     return;
 
@@ -45,8 +56,10 @@ document.getElementById("back1").onclick =  function(){
     url = window.location.href
     if (url.slice(-1) == '/')
         url = url.slice(0,-1);
-    const editedurl = url.slice(0,-1)+(parseInt( url.slice(-1))-1);
-    window.location.href = editedurl;
+
+    url = url.substring(0,ep_index)+(parseInt(url_post_ep_index)-1);
+
+    window.location.href = url;
 
 
     return;
@@ -64,6 +77,9 @@ const season_index = url.indexOf('season-')+7;
 const url_post_season_index = url.substring(season_index);
 const season_number = url_post_season_index.substring(0,url_post_season_index.indexOf('-'));
 
+const episode_index = url.indexOf('episode/');
+const url_pre_episode_index = url.substring(0,episode_index);
+
 
 if (url.slice(-2) == ep_div_length){
     
@@ -76,8 +92,7 @@ if (url.slice(-2) == ep_div_length){
         document.getElementById('next1').innerText = 'next season';
         document.getElementById('next1').onclick =  function(){
             
-            url =   'https://nova.egybest.bid/season/suits-season-'+(parseInt( season_number)+1);
-
+            url =   url_pre_episode_index+'season/'+url.substring(episode_index+8,season_index)+(parseInt(season_number)+1)
             
             window.location.href = url;
             
@@ -101,7 +116,7 @@ if (url.slice(-1) == '1' && parseInt(url.slice(-2)) < 0){
         document.getElementById('back1').innerText = 'previous season';
         document.getElementById('back1').onclick =  function(){
             
-            url =  'https://nova.egybest.bid/season/suits-season-'+(parseInt( season_number)-1);
+            url =   url_pre_episode_index+'season/'+url.substring(episode_index+8,season_index)+(parseInt(season_number)-1)
 
             
             window.location.href = url;
